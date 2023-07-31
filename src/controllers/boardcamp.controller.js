@@ -1,6 +1,7 @@
 import { db } from "../database/database.connection.js";
 import { newCustomerSchema } from "../schemas/customers.schemas.js";
 import { newGameSchema } from "../schemas/games.schemas.js";
+import { newRentalSchema } from "../schemas/rentals.schemas.js";
 
 export async function getGames(req, res) {
 	try {
@@ -114,4 +115,18 @@ export async function updateCustomer(req, res) {
 	} catch (err) {
 		res.status(500).send(err.message);
 	}
+}
+
+export async function getRentals(req, res) {
+	try {
+		const rentals = await db.query(
+		);
+		res.send(rentals.rows);
+	} catch (err) {
+		res.status(500).send(err.message);
+	}
+}
+
+export async function postRental(req, res){
+	
 }
