@@ -3,7 +3,9 @@ import {
 	getCustomerById,
 	getCustomers,
 	getGames,
+	postCustomer,
 	postGame,
+	updateCustomer,
 } from "../controllers/boardcamp.controller.js";
 
 const boardcampRouter = Router();
@@ -13,5 +15,7 @@ boardcampRouter.post("/games", postGame);
 
 boardcampRouter.get("/customers", getCustomers);
 boardcampRouter.get("/customers/:id", getCustomerById);
+boardcampRouter.post("/customers", postCustomer);
+boardcampRouter.put("/customers/:id", updateCustomer);
 
 export default boardcampRouter;
