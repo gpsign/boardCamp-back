@@ -39,7 +39,9 @@ export async function postGame(req, res) {
 
 export async function getCustomers(req, res) {
 	try {
-		const customers = await db.query("SELECT * FROM customers");
+		const customers = await db.query(
+			"SELECT *, TO_CHAR(birthday, 'YYYY-MM-DD') AS birthday FROM customers"
+		);
 		res.send(customers.rows);
 	} catch (err) {
 		res.status(500).send(err.message);
@@ -50,9 +52,10 @@ export async function getCustomerById(req, res) {
 	const { id } = req.params;
 
 	try {
-		const customers = await db.query("SELECT * FROM customers WHERE id = $1", [
-			id,
-		]);
+		const customers = await db.query(
+			"SELECT *, TO_CHAR(birthday, 'YYYY-MM-DD') AS birthday FROM customers WHERE id = $1;",
+			[id]
+		);
 		customers.rows[0] ? res.send(customers.rows[0]) : res.sendStatus(404);
 	} catch (err) {
 		res.status(500).send(err.message);
@@ -67,6 +70,8 @@ export async function postCustomer(req, res) {
 	}
 
 	const { name, phone, cpf, birthday } = req.body;
+
+	console.log(birthday);
 
 	try {
 		const exist = await db.query(`SELECT * FROM customers WHERE cpf = $1;`, [
