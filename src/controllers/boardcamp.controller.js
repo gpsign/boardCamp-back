@@ -14,7 +14,7 @@ export async function postGame(req, res) {
 	const validation = newGameSchema.validate(req.body);
 	if (validation.error) {
 		const errors = validation.error.details.map((detail) => detail.message);
-		return res.status(422).send(errors);
+		return res.status(400).send(errors);
 	}
 	const { name, image, stockTotal, pricePerDay } = req.body;
 	if (stockTotal < 1 || pricePerDay < 1) return res.sendStatus(400);
@@ -33,6 +33,29 @@ export async function postGame(req, res) {
 		res.send(201);
 	} catch (err) {
 		console.log(err);
+		res.status(500).send(err.message);
+	}
+}
+
+export async function getCustomers(req, res) {
+	try {
+		const customers = await db.query("SELECT * FROM customers");
+		res.send(customers.rows);
+	} catch (err) {
+		res.status(500).send(err.message);
+	}
+}
+
+export async function getCustomerById(req, res) {
+	const { id } = req.params;
+
+	try {
+		const customers = await db.query("SELECT * FROM customers WHERE id = $1", [
+			id,
+		]);
+		customers.rows[0] ? res.send(customers.rows[0]) : res.sendStatus(404);
+
+	} catch (err) {
 		res.status(500).send(err.message);
 	}
 }
