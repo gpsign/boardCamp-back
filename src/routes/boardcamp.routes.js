@@ -3,6 +3,7 @@ import {
 	getCustomerById,
 	getCustomers,
 	getGames,
+	getRentals,
 	postCustomer,
 	postGame,
 	updateCustomer,
@@ -17,5 +18,8 @@ boardcampRouter.get("/customers", getCustomers);
 boardcampRouter.get("/customers/:id", getCustomerById);
 boardcampRouter.post("/customers", postCustomer);
 boardcampRouter.put("/customers/:id", updateCustomer);
+
+boardcampRouter.get("/rentals", getRentals);
+
 
 export default boardcampRouter;
